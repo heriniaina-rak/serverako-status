@@ -1,4 +1,4 @@
-# serverako-status
+# serverako-status.
 
 Page de statut publique de Serverako (status.serverako.com, BACKLOG 9.8), hébergée sur Vercel, **hors de la machine Serverako** : elle reste lisible quand la plateforme est en panne.
 
