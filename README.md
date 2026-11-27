@@ -7,6 +7,7 @@ Page de statut publique de Serverako (status.serverako.com, BACKLOG 9.8), héber
 - **Sondes** : `.github/workflows/probe.yml` lance `scripts/probe.mjs` toutes les 5 minutes sur les URLs de `status.config.json`. Un composant n'est en panne qu'après deux essais ratés à 5 s d'écart.
 - **Historique** : `status.json` sur la branche `data` (état courant, mesures des dernières 24 h, cumul par jour sur 90 jours), réécrite en un seul commit à chaque passage. Vercel ne déploie pas cette branche (`vercel.json`).
 - **Page** : `src/app/page.tsx` relit `status.json` au plus toutes les minutes (`cacheLife('minutes')`, URL `STATUS_DATA_URL`, par défaut le fichier brut de la branche `data` sur GitHub). Sans mesure depuis 20 minutes, elle annonce que les sondes sont en retard au lieu d'afficher un état périmé.
+- **Alertes par email** : quand un composant change d'état (panne, puis rétablissement avec la durée), `scripts/probe.mjs` envoie un email par l'API Brevo. Un seul email par changement, pas un toutes les 5 minutes. Secrets du dépôt GitHub (Settings → Secrets and variables → Actions) : `BREVO_APIKEY`, `BREVO_SENDER_EMAIL` (expéditeur validé chez Brevo), `ALERT_TO` (adresses séparées par des virgules). Vercel n'en a pas besoin. Test : Actions → `probe` → *Run workflow* en cochant « Envoyer un email de test ». Si Brevo refuse l'envoi, le workflow échoue et GitHub envoie sa propre notification d'échec.
 - **Incidents et maintenances** : un fichier Markdown par incident dans `incidents/` (voir `incidents/README.md`), publié par `git push`.
 
 ## Composants sondés
