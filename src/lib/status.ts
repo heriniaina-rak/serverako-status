@@ -24,15 +24,14 @@ const DATA_URL =
   process.env.STATUS_DATA_URL ??
   'https://raw.githubusercontent.com/heriniaina-rak/serverako-status/data/status.json';
 
-/** Mesures publiées par les sondes (branche `data`), relues au plus toutes les minutes. */
+/** Mesures publiées par les sondes (branche `data`). Pas de cache propre : `getView` (view.ts) est le
+ * seul cache, sinon chaque régénération de la page relirait une mesure déjà périmée. */
 export async function getStatusData(): Promise<StatusData | null> {
-  'use cache';
-  cacheLife('minutes');
   try {
     // En local : STATUS_DATA_FILE=<status.json produit par scripts/probe.mjs>
     if (process.env.STATUS_DATA_FILE)
       return JSON.parse(await readFile(process.env.STATUS_DATA_FILE, 'utf8')) as StatusData;
-    const res = await fetch(DATA_URL, { signal: AbortSignal.timeout(8000) });
+    const res = await fetch(DATA_URL, { cache: 'no-store', signal: AbortSignal.timeout(8000) });
     if (!res.ok) return null;
     return (await res.json()) as StatusData;
   } catch {
