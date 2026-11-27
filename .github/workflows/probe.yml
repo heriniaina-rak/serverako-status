@@ -1,0 +1,41 @@
+# Sondes de la page de statut : toutes les 5 min (GitHub peut retarder les tâches planifiées de
+# quelques minutes), résultat dans status.json sur la branche `data`, réécrite en un seul commit à
+# chaque passage pour que le repo ne grossisse pas. Vercel ne déploie pas cette branche (vercel.json).
+name: probe
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: app
+      - uses: actions/checkout@v4
+        with:
+          ref: data
+          path: data
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node app/scripts/probe.mjs app/status.config.json data/status.json
+      - name: Publier status.json
+        working-directory: data
+        run: |
+          git config user.name 'serverako-status'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add status.json
+          git commit --quiet --amend -m 'status: mesures' || git commit --quiet -m 'status: mesures'
+          git push --quiet --force origin HEAD:data

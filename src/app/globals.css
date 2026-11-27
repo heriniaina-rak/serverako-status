@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/* Tokens de design/DESIGN.md (repo server-rak) : thème sombre par défaut, clair selon le système. */
+:root {
+  --bg: #122d28;
+  --surface: #1b473f;
+  --surface-hover: #215148;
+  --border: #215148;
+  --text: #efefef;
+  --text-strong: #ffffff;
+  --text-muted: #82cfcf;
+  --accent: #62c6c1;
+  --ok: #62c6c1;
+  --warn: #f2b84b;
+  --error: #ff8a80;
+  --neutral: color-mix(in srgb, #82cfcf 14%, transparent);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-hover: #efefef;
+    --border: #e2e2e2;
+    --text: #1e1e1e;
+    --text-strong: #1b473f;
+    --text-muted: #2e7064;
+    --accent: #1b473f;
+    --ok: #2e7064;
+    --warn: #a35200;
+    --error: #cd2b31;
+    --neutral: #e2e2e2;
+    color-scheme: light;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-heading: var(--text-strong);
+  --color-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-error: var(--error);
+  --color-neutral: var(--neutral);
+  --font-sans: "Rosa Sans", var(--font-montserrat), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}

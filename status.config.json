@@ -1,0 +1,33 @@
+{
+  "$comment": "Composants sondés toutes les 5 min par .github/workflows/probe.yml. expect : « 200 » = réponse 200 obligatoire ; « edge » = toute réponse HTTP sous 500 (Cloudflare répond 502/530 quand le tunnel est coupé).",
+  "components": [
+    {
+      "id": "apps",
+      "name": "Applications hébergées",
+      "description": "Routage des apps clientes (*.serverako.com) : Cloudflare, tunnel et proxy",
+      "url": "https://status-probe.serverako.com/",
+      "expect": "edge"
+    },
+    {
+      "id": "api",
+      "name": "API",
+      "description": "API de la plateforme, base de données et file de tâches",
+      "url": "https://api.serverako.com/health",
+      "expect": "200"
+    },
+    {
+      "id": "dashboard",
+      "name": "Dashboard",
+      "description": "Console app.serverako.com : projets, déploiements, facturation",
+      "url": "https://app.serverako.com/",
+      "expect": "200"
+    },
+    {
+      "id": "site",
+      "name": "Site serverako.com",
+      "description": "Site public et page des tarifs",
+      "url": "https://serverako.com/",
+      "expect": "200"
+    }
+  ]
+}

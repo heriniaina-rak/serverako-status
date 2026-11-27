@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>Serverako</title>
+  <rect width="512" height="512" rx="56" fill="#62C6C1"/>
+  <g fill="#1B473F" transform="translate(52 17)">
+    <rect x="86" y="96" width="24" height="24"/>
+    <rect x="136" y="96" width="24" height="24"/>
+    <rect x="110" y="120" width="26" height="26"/>
+    <path d="M290 170H165A65 65 0 0 0 165 300H235A17 17 0 0 1 235 334H100V382H235A65 65 0 0 0 235 252H165A17 17 0 0 1 165 218H290L322 194Z"/>
+  </g>
+</svg>
